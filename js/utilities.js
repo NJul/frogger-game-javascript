@@ -1,10 +1,14 @@
 // animation loop
+/* Метод CanvasRenderingContext2D.clearRect(), предоставляемый Canvas 2D API, устанавливает прозрачный черный цвет для всех пикселей, расположенных внутри прямоугольника, заданного начальной точкой (x, y) и размерами (width, height), таким образом стирая любое ранее нарисованное содержимое. */
+/* window.requestAnimationFrame указывает браузеру на то, что вы хотите произвести анимацию, и просит его запланировать перерисовку на следующем кадре анимации. В качестве параметра метод получает функцию, которая будет вызвана перед перерисовкой. animation loop */
+
 function animate() {
-  /* Метод CanvasRenderingContext2D.clearRect(), предоставляемый Canvas 2D API, устанавливает прозрачный черный цвет для всех пикселей, расположенных внутри прямоугольника, заданного начальной точкой (x, y) и размерами (width, height), таким образом стирая любое ранее нарисованное содержимое. */
   ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
+  ctx2.drawImage(background_lvl2, 0, 0, canvas1.width, canvas1.height);
   frogger.draw();
   frogger.update();
-  /* window.requestAnimationFrame указывает браузеру на то, что вы хотите произвести анимацию, и просит его запланировать перерисовку на следующем кадре анимации. В качестве параметра метод получает функцию, которая будет вызвана перед перерисовкой. animation loop */
+  ctx4.drawImage(grass, 0, 0, canvas1.width, canvas1.height);
+  handleObstacles();
   requestAnimationFrame(animate);
 }
 animate();
