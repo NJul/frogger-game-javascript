@@ -16,6 +16,7 @@ class Obstacle {
         if (this.frameX >= 1) this.frameX = 0;
         else this.frameX++;
       }
+      // ctx1.fillRect(this.x, this.y, this.width, this.height);
       ctx1.drawImage(
         turtle,
         this.frameX * 70,
@@ -42,8 +43,8 @@ class Obstacle {
         this.height
       );
     }
-    ctx3.fillStyle = 'blue';
-    ctx3.fillRect(this.x, this.y, this.width, this.height);
+    // ctx3.fillStyle = 'blue';
+    // ctx3.fillRect(this.x, this.y, this.width, this.height);
   }
   update() {
     this.x += this.speed * gameSpeed;
@@ -107,5 +108,22 @@ function handleObstacles() {
   for (let i = 0; i < logsArray.length; i++) {
     logsArray[i].update();
     logsArray[i].draw();
+  }
+  // collision with car
+  for (let i = 0; i < carsArray.length; i++) {
+    if (collision(frogger, carsArray[i])) {
+      ctx4.drawImage(
+        collisions,
+        0,
+        100,
+        100,
+        100,
+        frogger.x,
+        frogger.y,
+        50,
+        50
+      );
+      resetGame();
+    }
   }
 }
