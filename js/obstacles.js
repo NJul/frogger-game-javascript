@@ -9,6 +9,7 @@ class Obstacle {
     this.frameX = 0;
     this.frameY = 0;
     this.randomise = Math.floor(Math.random() * 30 + 30);
+    this.carType = Math.floor(Math.random() * numberOfCars);
   }
   draw() {
     if (this.type === 'turtle') {
@@ -16,7 +17,6 @@ class Obstacle {
         if (this.frameX >= 1) this.frameX = 0;
         else this.frameX++;
       }
-      // ctx1.fillRect(this.x, this.y, this.width, this.height);
       ctx1.drawImage(
         turtle,
         this.frameX * 70,
@@ -31,10 +31,10 @@ class Obstacle {
     } else if (this.type === 'log') {
       ctx1.drawImage(log, this.x, this.y, this.width, this.height);
     } else {
-      ctx1.drawImage(
+      ctx2.drawImage(
         car,
-        0,
-        0,
+        this.frameX * this.width,
+        this.carType * this.height,
         grid * 2,
         grid,
         this.x,
@@ -43,8 +43,6 @@ class Obstacle {
         this.height
       );
     }
-    // ctx3.fillStyle = 'blue';
-    // ctx3.fillRect(this.x, this.y, this.width, this.height);
   }
   update() {
     this.x += this.speed * gameSpeed;
@@ -52,10 +50,13 @@ class Obstacle {
     if (this.speed > 0) {
       if (this.x > canvas1.width + this.width) {
         this.x = 0 - this.width;
+        this.carType = Math.floor(Math.random() * numberOfCars);
       }
     } else {
+      this.frameX = 1;
       if (this.x < 0 - this.width) {
         this.x = canvas1.width + this.width;
+        this.carType = Math.floor(Math.random() * numberOfCars);
       }
     }
   }
@@ -123,6 +124,24 @@ function handleObstacles() {
         50,
         50
       );
+      resetGame();
+    }
+  }
+
+  // collisions with logs/turtles
+  if (frogger.y < 250 && frogger.y > 100) {
+    safe = false;
+
+    for (let i = 0; i < logsArray.length; i++) {
+      if (collision(frogger, logsArray[i])) {
+        frogger.x += logsArray[i].speed;
+        safe = true;
+      }
+    }
+    if (!safe) {
+      for (let i = 0; i < 30; i++) {
+        ripplesArray.unshift(new Particle(frogger.x, frogger.y));
+      }
       resetGame();
     }
   }
