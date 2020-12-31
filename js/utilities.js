@@ -3,12 +3,20 @@
 /* window.requestAnimationFrame указывает браузеру на то, что вы хотите произвести анимацию, и просит его запланировать перерисовку на следующем кадре анимации. В качестве параметра метод получает функцию, которая будет вызвана перед перерисовкой. animation loop */
 
 function animate() {
+  ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+  ctx2.clearRect(0, 0, canvas1.width, canvas1.height);
   ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
+  ctx4.clearRect(0, 0, canvas1.width, canvas1.height);
+  ctx5.clearRect(0, 0, canvas1.width, canvas1.height);
+
+  handleRipples();
   ctx2.drawImage(background_lvl2, 0, 0, canvas1.width, canvas1.height);
+  handleParticles();
   frogger.draw();
   frogger.update();
-  ctx4.drawImage(grass, 0, 0, canvas1.width, canvas1.height);
+
   handleObstacles();
+  ctx4.drawImage(grass, 0, 0, canvas1.width, canvas1.height);
   requestAnimationFrame(animate);
 }
 animate();
